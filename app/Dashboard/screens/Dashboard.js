@@ -23,11 +23,6 @@ class Dashboard extends Component{
           </Body>
         </Header>
         
-        <List>
-          <ListItem>
-            <Text>Ongoing home works</Text>
-          </ListItem>
-        </List>
         <OngoingList/>
 
         <Fab

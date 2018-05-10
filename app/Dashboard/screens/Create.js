@@ -1,32 +1,143 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { 
-  Container, Content
+  Container, Content, Button, View, Form, Text, Label, Input, Item
 } from 'native-base';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { postOngoingHomeWork, allOngoingHomeWork } from '../actions';
-import CreateForm from '../Form/CreateForm';
 
 class Create extends Component{
 
-  handleSubmit = (value) => {
-    this.props.dispatch(postOngoingHomeWork(value)).then(() => {
-      this.props.dispatch(allOngoingHomeWork())
-      this.props.dispatch({
-        type: "Navigation/BACK",
-        routeName: "Main"
-      })
+  state = {
+    isVisible: false,
+    homework:{
+      title: "",
+      teacher: "",
+      deadline: ""
+    }
+  }
+
+  handleShowDatePicker = () => {
+    this.setState({isVisible : true})
+  }
+
+  handleHideDatePicker = () => {
+    this.setState({isVisible : false})
+  }
+
+  handleDatePicked = (date) => {
+    this.setState({homework:{...this.state.homework, deadline: date}})
+    alert("You have set deadline at " + date)
+  }
+
+  handleSubmit(){
+    this.props.dispatch(postOngoingHomeWork(this.state.homework))
+    .then((result) => {
+      this.props.dispatch({type:"Navigation/BACK", routeName:"Main"})
     })
   }
 
   render(){
     return(
-      <Container style={{backgroundColor: '#ffffff'}}>
-        <CreateForm {...this.props} onSubmit={this.handleSubmit}/>
+      <Container style={styles.container}>
+        <Form style={styles.form}>
+
+          <Label>Title</Label>
+          <Item regular>
+            <Input 
+              value={this.state.homework.title} 
+              placeholder="Create a story in english"
+              onChangeText={(text) => this.setState({homework:{...this.state.homework, title: text}})}/>
+          </Item>
+
+          <Label>Teacher</Label>
+          <Item regular>
+            <Input 
+              value={this.state.homework.teacher}
+              placeholder="example: Mr.Moon"
+              onChangeText={(text) => this.setState({homework:{...this.state.homework, teacher: text}})}/>
+          </Item>
+
+          <Label>Deadline</Label>
+          <Item regular>
+            <Input 
+              value={moment(this.state.homework.deadline).format('lll')}/>
+          </Item>
+
+          <Button block primary
+            onPress={()=> this.handleShowDatePicker()}>
+            <Text>Pick Datetimes</Text>
+          </Button>
+
+          <View style={styles.confirmButtons}>
+            <Button block style={styles.createButton} 
+              onPress={() => this.handleSubmit() }>
+              <Text>Create</Text>
+            </Button>
+            <Button block style={styles.cancelButton}
+              onPress={()=> this.props.dispatch({
+                type:"Navigation/BACK",
+                routeName: "Main"
+              })}>
+              <Text>Cancel</Text>
+            </Button>
+          </View>
+
+          <View style={styles.container}>
+            <Text style={styles.warningText}>You only can pick deadline once time</Text>
+          </View>
+
+          <View style={{ flex: 1 }}>
+            <TouchableOpacity onPress={this.handleShowDatePicker}>
+              <Text>Show DatePicker</Text>
+            </TouchableOpacity>
+            <DateTimePicker
+              isVisible={this.state.isVisible}
+              onConfirm={this.handleDatePicked}
+              onCancel={this.handleHideDatePicker}
+            />
+          </View>
+
+        </Form>
       </Container>
     );
   }
 
 }
 
-export default connect()(Create);
+const styles = StyleSheet.create({
+  container:{
+    backgroundColor: "#ffffff"
+  },
+  form:{
+    padding: 10
+  },
+  warningText:{
+    paddingTop: 10,
+    padding: 5,
+    alignSelf: "center"
+  },
+  confirmButtons:{
+    flexDirection: "row", 
+    flex: 1, 
+    position: "absolute", 
+    top: 350, 
+    left: 0, 
+    right: 0, 
+    justifyContent: 'space-evenly'    
+  },
+  cancelButton:{
+    backgroundColor: "#d63031", width: 170
+  },
+  createButton:{
+    backgroundColor: "#2ecc71", width: 170
+  }
+});
+
+const mapStateToProps = (state) => ({
+  homeworkReducers: state.homeworkReducers
+})
+
+export default connect(mapStateToProps)(Create);

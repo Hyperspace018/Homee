@@ -22,7 +22,7 @@ const postOngoingHomeWork = (value) => {
     type: "POST_HOMEWORK",
     payload: axios({
       method: "POST",
-      url,
+      url: url,
       data: value
     })
   }

@@ -2,25 +2,27 @@ import React, { Component } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { 
   Card, CardItem, Icon, Badge, Text, Title, 
-  Body, Button, SwipeRow, Left, Right, Content, 
+  Body, Button, SwipeRow, Left, Right, Content, List, ListItem,
   View, Spinner
 } from 'native-base';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { allOngoingHomeWork } from '../actions'
 
 class OngoingList extends Component{
 
   componentDidMount(){
-    if(this.props.homeworkReducers.homeworks.length <= 0){
-      this.props.dispatch(allOngoingHomeWork())
-    }else{
-      // Do nothing
-    }
+    this.props.dispatch(allOngoingHomeWork())
   }
 
   render(){
     return(
       <Content>
+        <List>
+          <ListItem>
+            <Text>Ongoing</Text>
+          </ListItem>
+        </List>
         {this.props.homeworkReducers.isLoading ? (
           <Spinner color="#e67e22"/>
         ) : (
@@ -39,7 +41,7 @@ class OngoingList extends Component{
                     <Text>Teacher</Text>
                     <Text note>{homework.teacher}</Text>
                     <Text>Deadline</Text>
-                    <Text note>{homework.deadline}</Text>
+                    <Text note>{moment(homework.deadline).format('lll')}</Text>
                   </Body>
                 </CardItem>
               </Card>
