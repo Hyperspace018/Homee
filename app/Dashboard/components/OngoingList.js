@@ -1,44 +1,53 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Card, CardItem, Icon, Badge, Text, Title, Body, Button, SwipeRow, Left, Right } from 'native-base';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { 
+  Card, CardItem, Icon, Badge, Text, Title, 
+  Body, Button, SwipeRow, Left, Right, Content, 
+  View, Spinner
+} from 'native-base';
+import { connect } from 'react-redux';
+import { allOngoingHomeWork } from '../actions'
 
-export default class OngoingList extends Component{
+class OngoingList extends Component{
+  
+  componentDidMount(){
+    this.props.dispatch(allOngoingHomeWork())
+  }
 
   render(){
     return(
-      <Card>
-        <CardItem bordered>
-          <Text style={{color: "#e67e22", fontWeight: "bold"}}>PR Matematika LKS Hal 13</Text>
-        </CardItem>
-        <CardItem bordered style={{ padding: 2}}>
-          <Body>
-            <Text>Teacher</Text>
-            <Text note>Mrs.Handayani</Text>
-            <Text>Deadline</Text>
-            <Text note>3 November 2019</Text>
-          </Body>
-        </CardItem>
-      </Card>
+      <Content>
+        {this.props.homeworkReducers.isLoading ? (
+          <Spinner color="#e67e22"/>
+        ) : (
+          this.props.homeworkReducers.isError ? (
+            <Text>Network Error</Text>
+          ) : (
+            this.props.homeworkReducers.homeworks.map((homework) => (
+              <Card>
+                <CardItem bordered>
+                  <Text style={{color: "#e67e22", fontWeight: "bold"}}>{homework.title}</Text>
+                </CardItem>
+                <CardItem bordered style={{ padding: 2}}>
+                  <Body>
+                    <Text>Teacher</Text>
+                    <Text note>{homework.teacher}</Text>
+                    <Text>Deadline</Text>
+                    <Text note>{homework.deadline}</Text>
+                  </Body>
+                </CardItem>
+              </Card>
+            ))
+          )
+        )}
+      </Content>
     );
   }
 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcomeTitle: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  welcomeSubtitle: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+const mapStateToProps = (state) => ({
+  homeworkReducers: state.homeworkReducers
+})
+
+export default connect(mapStateToProps)(OngoingList)

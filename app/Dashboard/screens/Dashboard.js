@@ -22,8 +22,7 @@ export default class ExampleScreen1 extends Component{
               style={{width: 200, height: 35, resizeMode: "center"}}/>
           </Body>
         </Header>
-        <Content>
-        </Content>
+        <OngoingList/>        
         <Fab
           style={{ backgroundColor: '#2ecc71' }}
           position="bottomRight"
