@@ -9,9 +9,13 @@ import { connect } from 'react-redux';
 import { allOngoingHomeWork } from '../actions'
 
 class OngoingList extends Component{
-  
+
   componentDidMount(){
-    this.props.dispatch(allOngoingHomeWork())
+    if(this.props.homeworkReducers.homeworks.length <= 0){
+      this.props.dispatch(allOngoingHomeWork())
+    }else{
+      // Do nothing
+    }
   }
 
   render(){
@@ -21,7 +25,9 @@ class OngoingList extends Component{
           <Spinner color="#e67e22"/>
         ) : (
           this.props.homeworkReducers.isError ? (
-            <Text>Network Error</Text>
+            <View style={styles.container}>
+              <Text style={styles.errorResponse}>An error occurred</Text>
+            </View>
           ) : (
             this.props.homeworkReducers.homeworks.map((homework) => (
               <Card>
@@ -45,6 +51,25 @@ class OngoingList extends Component{
   }
 
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  errorResponse: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  errorResponseSub: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
 
 const mapStateToProps = (state) => ({
   homeworkReducers: state.homeworkReducers

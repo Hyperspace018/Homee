@@ -77,7 +77,7 @@ const RootNavigator = StackNavigator({
   Create:{
     screen: Create,
     navigationOptions:{
-      title: 'Create new Oongoing Home work'
+      header: null
     }
   }
 

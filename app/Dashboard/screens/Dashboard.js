@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 
 import OngoingList from '../components/OngoingList';
 
-export default class ExampleScreen1 extends Component{
+class Dashboard extends Component{
 
   render(){
     return(
@@ -22,11 +22,21 @@ export default class ExampleScreen1 extends Component{
               style={{width: 200, height: 35, resizeMode: "center"}}/>
           </Body>
         </Header>
-        <OngoingList/>        
+        
+        <List>
+          <ListItem>
+            <Text>Ongoing home works</Text>
+          </ListItem>
+        </List>
+        <OngoingList/>
+
         <Fab
           style={{ backgroundColor: '#2ecc71' }}
           position="bottomRight"
-          onPress={() => alert("Navigate")}>
+          onPress={() => this.props.dispatch({
+            type: 'Navigation/NAVIGATE',
+            routeName: 'Create'
+          })}>
           <Icon name="add"/>
         </Fab>
       </Container>
@@ -53,3 +63,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   }
 });
+
+const mapStateToProps = (state) => ({
+  homeworkReducers: state.homeworkReducers
+})
+
+export default connect(mapStateToProps)(Dashboard)

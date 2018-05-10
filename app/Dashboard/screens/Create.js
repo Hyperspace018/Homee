@@ -1,16 +1,32 @@
 import React, { Component } from 'react';
-import { Container, Content, Text } from 'native-base';
+import { StyleSheet } from 'react-native';
+import { 
+  Container, Content
+} from 'native-base';
+import { connect } from 'react-redux';
+import { postOngoingHomeWork, allOngoingHomeWork } from '../actions';
+import CreateForm from '../Form/CreateForm';
 
-export default class Create extends Component{
+class Create extends Component{
+
+  handleSubmit = (value) => {
+    this.props.dispatch(postOngoingHomeWork(value)).then(() => {
+      this.props.dispatch(allOngoingHomeWork())
+      this.props.dispatch({
+        type: "Navigation/BACK",
+        routeName: "Main"
+      })
+    })
+  }
 
   render(){
     return(
-      <Container>
-        <Content>
-          <Text>Create</Text>
-        </Content>
+      <Container style={{backgroundColor: '#ffffff'}}>
+        <CreateForm {...this.props} onSubmit={this.handleSubmit}/>
       </Container>
     );
   }
 
 }
+
+export default connect()(Create);
