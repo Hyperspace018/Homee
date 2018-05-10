@@ -3,10 +3,14 @@ import { Icon } from 'native-base';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 
 // Replace imported screen with your screen
+// Main Screens
 import Splash from '../Splash/screens/Splash';
 import Dashboard from '../Dashboard/screens/Dashboard';
 import Profile from '../Profile/screens/Profile';
 import Settings from '../Settings/screens/Settings';
+
+// Sub Screens
+import Create from '../Dashboard/screens/Create';
 
 const Main = TabNavigator({
 
@@ -67,6 +71,13 @@ const RootNavigator = StackNavigator({
     screen: Splash,
     navigationOptions:{
       header: null
+    }
+  },
+
+  Create:{
+    screen: Create,
+    navigationOptions:{
+      title: 'Create new Oongoing Home work'
     }
   }
 

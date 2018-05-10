@@ -3,9 +3,10 @@ import { StyleSheet, Image } from 'react-native';
 import { 
   Container, Content, Text, Button, View,
   Tab, Tabs, TabHeading, Icon, Badge, Header, Fab,
-  Left, Right, Body, Title, Segment, List, ListItem, Thumbnail
+  Left, Right, Body, Title, Segment, List, ListItem, 
+  Thumbnail
 } from 'native-base';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
 import OngoingList from '../components/OngoingList';
 
@@ -26,8 +27,8 @@ export default class ExampleScreen1 extends Component{
         <Fab
           style={{ backgroundColor: '#2ecc71' }}
           position="bottomRight"
-          onPress={() => this.props.navigation.navigate('ContactAdd')}>
-          <Icon name="add" />
+          onPress={() => alert("Navigate")}>
+          <Icon name="add"/>
         </Fab>
       </Container>
     );
@@ -51,5 +52,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
-  },
+  }
 });
