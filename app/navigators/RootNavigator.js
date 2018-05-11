@@ -8,6 +8,7 @@ import Splash from '../Splash/screens/Splash';
 import Dashboard from '../Dashboard/screens/Dashboard';
 import Profile from '../Profile/screens/Profile';
 import Settings from '../Settings/screens/Settings';
+import Register from '../Register/screens/Register';
 
 // Sub Screens
 import Create from '../Dashboard/screens/Create';
@@ -76,6 +77,13 @@ const RootNavigator = StackNavigator({
 
   Create:{
     screen: Create,
+    navigationOptions:{
+      header: null
+    }
+  },
+
+  Register:{
+    screen: Register,
     navigationOptions:{
       header: null
     }
