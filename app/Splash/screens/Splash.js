@@ -6,7 +6,7 @@ export default class Splash extends Component{
 
   navigateToMain(){
     setTimeout(() => {
-      this.props.navigation.navigate("Main");
+      this.props.navigation.navigate("Register");
     }, 1000)
   }
 
