@@ -52,7 +52,7 @@ class Dashboard extends Component{
           <PendingList/>
         </Content>
         <Fab
-          style={{ backgroundColor: '#2ecc71' }}
+          style={{ backgroundColor: '#d35400' }}
           position="bottomRight"
           onPress={() => this.props.dispatch({
             type: 'Navigation/NAVIGATE',

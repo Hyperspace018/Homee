@@ -70,6 +70,7 @@ class Create extends Component{
             <Input 
               value={this.state.homework.title} 
               placeholder="Create a story in english"
+              placeholderTextColor="#dfe6e9"
               onChangeText={(text) => this.setState({homework:{...this.state.homework, title: text}})}/>
           </Item>
 
@@ -78,6 +79,7 @@ class Create extends Component{
             <Input 
               value={this.state.homework.teacher}
               placeholder="example: Mr.Moon"
+              placeholderTextColor="#dfe6e9"
               onChangeText={(text) => this.setState({homework:{...this.state.homework, teacher: text}})}/>
           </Item>
 
