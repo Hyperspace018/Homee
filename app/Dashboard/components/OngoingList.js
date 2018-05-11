@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity,AsyncStorage } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { 
   Card, CardItem, Icon, Badge, Text, Title, 
   Body, Button, SwipeRow, Left, Right, Content, List, ListItem,
@@ -7,19 +7,8 @@ import {
 } from 'native-base';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { allOngoingHomeWork } from '../actions'
 
 class OngoingList extends Component{
-
-  componentDidMount(){
-    AsyncStorage.multiGet(['@objectId:key'], (error, result) => {
-      if(result){
-        if(result[0][1] !== null){
-          this.props.dispatch(allOngoingHomeWork(result[0][1]))
-        }
-      }
-    });
-  }
 
   render(){
     return(
@@ -31,20 +20,22 @@ class OngoingList extends Component{
             <Text style={styles.errorResponse}>An error occurred</Text>
           </View>
         ) : (
-          this.props.homeworkReducers.homeworks.map((homework) => (
-            <Card>
-              <CardItem bordered>
-                <Text style={{color: "#3498db", fontWeight: "bold"}}>{homework.title}</Text>
-              </CardItem>
-              <CardItem bordered style={{ padding: 2}}>
-                <Body>
-                  <Text>Teacher</Text>
-                  <Text note>{homework.teacher}</Text>
-                  <Text>Deadline</Text>
-                  <Text note>{moment(homework.deadline).format('lll')}</Text>
-                </Body>
-              </CardItem>
-            </Card>
+          this.props.homeworkReducers.homeworksOngoing.map((homework) => (
+            <TouchableOpacity onPress={() => alert("Press " + homework.objectId)} onLongPress={() => alert("Long press" + homework.objectId)}>
+              <Card>
+                <CardItem bordered>
+                  <Text style={{color: "#3498db", fontWeight: "bold"}}>{homework.title}</Text>
+                </CardItem>
+                <CardItem bordered style={{ padding: 2}}>
+                  <Body>
+                    <Text>Teacher</Text>
+                    <Text note>{homework.teacher}</Text>
+                    <Text>Deadline</Text>
+                    <Text note>{moment(homework.deadline).format('lll')}</Text>
+                  </Body>
+                </CardItem>
+              </Card>
+            </TouchableOpacity>          
           ))
         )
       )

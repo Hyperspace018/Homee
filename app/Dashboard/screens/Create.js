@@ -6,13 +6,14 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { postOngoingHomeWork, allOngoingHomeWork } from '../actions';
+import { postOngoingHomeWork, allOngoingHomeWork, allDoneHomework, allPendingHomework } from '../actions';
 
 class Create extends Component{
 
   state = {
     isVisible: false,
     homework:{
+      state: "ongoing",
       owner: "",
       title: "",
       teacher: "",
@@ -46,8 +47,16 @@ class Create extends Component{
   handleSubmit(){
     this.props.dispatch(postOngoingHomeWork(this.state.homework))
     .then((result) => {
-      this.props.dispatch(allOngoingHomeWork())
-      this.props.dispatch({type:"Navigation/BACK", routeName:"Main"})
+      AsyncStorage.multiGet(['@objectId:key'], (error, result) => {
+        if(result){
+          if(result[0][1] !== null){
+            this.props.dispatch(allOngoingHomeWork(result[0][1]))
+            this.props.dispatch(allDoneHomework(result[0][1]))
+            this.props.dispatch(allPendingHomework(result[0][1]))
+            this.props.dispatch({type:"Navigation/BACK", routeName:"Main"})
+          }
+        }
+      });
     })
   }
 

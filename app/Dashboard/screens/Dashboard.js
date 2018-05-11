@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, AsyncStorage } from 'react-native';
 import { 
   Container, Content, Text, Button, View,
   Tab, Tabs, TabHeading, Icon, Badge, Header, Fab,
@@ -7,12 +7,25 @@ import {
   Thumbnail
 } from 'native-base';
 import { connect } from 'react-redux';
+import { allOngoingHomeWork, allDoneHomework, allPendingHomework } from '../actions';
 
 import OngoingList from '../components/OngoingList';
 import DoneList from '../components/DoneList';
 import PendingList from '../components/PendingList';
 
 class Dashboard extends Component{
+  
+  componentDidMount(){
+    AsyncStorage.multiGet(['@objectId:key'], (error, result) => {
+      if(result){
+        if(result[0][1] !== null){
+          this.props.dispatch(allOngoingHomeWork(result[0][1]))
+          this.props.dispatch(allDoneHomework(result[0][1]))
+          this.props.dispatch(allPendingHomework(result[0][1]))
+        }
+      }
+    });
+  }
 
   render(){
     return(
@@ -24,25 +37,20 @@ class Dashboard extends Component{
               style={{width: 200, height: 35, resizeMode: "center"}}/>
           </Body>
         </Header>
-
-        <Tabs>
-          <Tab heading={ <TabHeading><Text>Ongoing</Text></TabHeading>}>
-            <Content>
-              <OngoingList/>
-            </Content>
-          </Tab>
-          <Tab heading={ <TabHeading><Text>Done</Text></TabHeading>}>
-            <Content>
-              <DoneList/>
-            </Content>
-          </Tab>
-          <Tab heading={ <TabHeading><Text>Pending</Text></TabHeading>}>
-            <Content>
-              <PendingList/>
-            </Content>
-          </Tab>
-        </Tabs>
-
+        <Content>
+          <ListItem itemDivider>
+            <Text>Ongoing</Text>
+          </ListItem> 
+          <OngoingList/>
+          <ListItem itemDivider>
+            <Text>Done</Text>
+          </ListItem> 
+          <DoneList/>
+          <ListItem itemDivider>
+            <Text>Pending</Text>
+          </ListItem> 
+          <PendingList/>
+        </Content>
         <Fab
           style={{ backgroundColor: '#2ecc71' }}
           position="bottomRight"

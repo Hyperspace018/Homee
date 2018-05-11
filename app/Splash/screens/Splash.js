@@ -1,17 +1,31 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, AsyncStorage } from 'react-native';
 import { Container, Content, Text, Button, View } from 'native-base';
 
 export default class Splash extends Component{
 
   navigateToMain(){
     setTimeout(() => {
-      this.props.navigation.navigate("Login");
+      this.props.navigation.navigate("Main");
+    }, 1000)
+  }
+
+  navigateToRegister(){
+    setTimeout(() => {
+      this.props.navigation.navigate("Register");
     }, 1000)
   }
 
   componentDidMount(){
-    this.navigateToMain();
+    AsyncStorage.multiGet(['@objectId:key'], (error, result) => {
+      if(result){
+        if(result[0][1] !== null){
+          this.navigateToMain()
+        }else{
+          this.navigateToRegister()
+        }
+      }
+    });
   }
 
   render(){

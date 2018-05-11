@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity,AsyncStorage } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { 
   Card, CardItem, Icon, Badge, Text, Title, 
   Body, Button, SwipeRow, Left, Right, Content, List, ListItem,
@@ -7,19 +7,8 @@ import {
 } from 'native-base';
 import moment from 'moment';
 import { connect } from 'react-redux';
-import { allPendingHomework } from '../actions'
 
 class PendingList extends Component{
-
-  componentDidMount(){
-    AsyncStorage.multiGet(['@objectId:key'], (error, result) => {
-      if(result){
-        if(result[0][1] !== null){
-          this.props.dispatch(allPendingHomework(result[0][1]))
-        }
-      }
-    });
-  }
 
   render(){
     return(
@@ -31,7 +20,7 @@ class PendingList extends Component{
             <Text style={styles.errorResponse}>An error occurred</Text>
           </View>
         ) : (
-          this.props.homeworkReducers.homeworks.map((homework) => (
+          this.props.homeworkReducers.homeworksPend.map((homework) => (
             <Card>
               <CardItem bordered>
                 <Text style={{color: "#f1c40f", fontWeight: "bold"}}>{homework.title}</Text>
