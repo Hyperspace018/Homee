@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, AsyncStorage } from 'react-native';
 import { 
   Container, Content, Button, View, Form, Text, Label, Input, Item
 } from 'native-base';
@@ -13,10 +13,21 @@ class Create extends Component{
   state = {
     isVisible: false,
     homework:{
+      owner: "",
       title: "",
       teacher: "",
       deadline: ""
     }
+  }
+
+  componentDidMount(){
+    AsyncStorage.multiGet(['@objectId:key'], (error, result) => {
+      if(result){
+        if(result[0][1] !== null){
+          this.setState({homework:{...this.state.homework, owner: result[0][1]}})
+        }
+      }
+    });
   }
 
   handleShowDatePicker = () => {
@@ -35,6 +46,7 @@ class Create extends Component{
   handleSubmit(){
     this.props.dispatch(postOngoingHomeWork(this.state.homework))
     .then((result) => {
+      this.props.dispatch(allOngoingHomeWork())
       this.props.dispatch({type:"Navigation/BACK", routeName:"Main"})
     })
   }

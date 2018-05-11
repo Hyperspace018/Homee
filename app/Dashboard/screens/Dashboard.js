@@ -9,6 +9,8 @@ import {
 import { connect } from 'react-redux';
 
 import OngoingList from '../components/OngoingList';
+import DoneList from '../components/DoneList';
+import PendingList from '../components/PendingList';
 
 class Dashboard extends Component{
 
@@ -22,8 +24,24 @@ class Dashboard extends Component{
               style={{width: 200, height: 35, resizeMode: "center"}}/>
           </Body>
         </Header>
-        
-        <OngoingList/>
+
+        <Tabs>
+          <Tab heading={ <TabHeading><Text>Ongoing</Text></TabHeading>}>
+            <Content>
+              <OngoingList/>
+            </Content>
+          </Tab>
+          <Tab heading={ <TabHeading><Text>Done</Text></TabHeading>}>
+            <Content>
+              <DoneList/>
+            </Content>
+          </Tab>
+          <Tab heading={ <TabHeading><Text>Pending</Text></TabHeading>}>
+            <Content>
+              <PendingList/>
+            </Content>
+          </Tab>
+        </Tabs>
 
         <Fab
           style={{ backgroundColor: '#2ecc71' }}

@@ -1,8 +1,36 @@
 import axios from 'axios';
+import { AsyncStorage } from 'react-native';
 
-const allOngoingHomeWork = () => {
+const allOngoingHomeWork = (objectId) => {
 
-  const url = "https://api.backendless.com/9C2E4015-1686-CE6C-FFE9-C0980E239D00/C06C6410-D772-8A54-FFF2-A566229EC300/data/Ongoing?where=owner%3D'4D1D9DF5-9A07-9166-FF9D-223A1CB44F00'";
+  const url = "https://api.backendless.com/9C2E4015-1686-CE6C-FFE9-C0980E239D00/C06C6410-D772-8A54-FFF2-A566229EC300/data/Homeworks?where=owner%3D'"+objectId+"'%20AND%20state%3D'ongoing'";
+  return{
+    type: "ALL_HOMEWORK",
+    payload: axios({
+      method: "GET",
+      url
+    })
+  }
+
+}
+
+const allDoneHomework = (objectId) => {
+
+  const url = "https://api.backendless.com/9C2E4015-1686-CE6C-FFE9-C0980E239D00/C06C6410-D772-8A54-FFF2-A566229EC300/data/Homeworks?where=owner%3D'"+objectId+"'%20AND%20state%3D'done'";
+
+  return{
+    type: "ALL_HOMEWORK",
+    payload: axios({
+      method: "GET",
+      url
+    })
+  }
+
+}
+
+const allPendingHomework = (objectId) => {
+  
+  const url = "https://api.backendless.com/9C2E4015-1686-CE6C-FFE9-C0980E239D00/C06C6410-D772-8A54-FFF2-A566229EC300/data/Homeworks?where=owner%3D'"+objectId+"'%20AND%20state%3D'pending'";
 
   return{
     type: "ALL_HOMEWORK",
@@ -16,7 +44,7 @@ const allOngoingHomeWork = () => {
 
 const postOngoingHomeWork = (value) => {
   
-  const url = "https://api.backendless.com/9C2E4015-1686-CE6C-FFE9-C0980E239D00/C06C6410-D772-8A54-FFF2-A566229EC300/data/Ongoing";
+  const url = "https://api.backendless.com/9C2E4015-1686-CE6C-FFE9-C0980E239D00/C06C6410-D772-8A54-FFF2-A566229EC300/data/Homeworks";
   
   return{
     type: "POST_HOMEWORK",
@@ -31,5 +59,7 @@ const postOngoingHomeWork = (value) => {
 
 export{
   allOngoingHomeWork,
+  allDoneHomework,
+  allPendingHomework,
   postOngoingHomeWork
 }

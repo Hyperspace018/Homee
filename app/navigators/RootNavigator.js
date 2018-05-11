@@ -9,6 +9,7 @@ import Dashboard from '../Dashboard/screens/Dashboard';
 import Profile from '../Profile/screens/Profile';
 import Settings from '../Settings/screens/Settings';
 import Register from '../Register/screens/Register';
+import Login from '../Login/screens/Login';
 
 // Sub Screens
 import Create from '../Dashboard/screens/Create';
@@ -84,6 +85,13 @@ const RootNavigator = StackNavigator({
 
   Register:{
     screen: Register,
+    navigationOptions:{
+      header: null
+    }
+  },
+
+  Login:{
+    screen: Login,
     navigationOptions:{
       header: null
     }

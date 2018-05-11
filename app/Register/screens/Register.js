@@ -62,7 +62,7 @@ class Register extends Component{
                 <Text>Register</Text>
               )}
             </Button>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate("Login")}>
               <Text style={styles.additionalOption}>Already have an account? Login Now!</Text>
             </TouchableOpacity>
           </View>
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     padding: 10
   },
   form:{
-    padding: 10, 
+    padding: 10,
     backgroundColor: '#F5FCFF'
   },
   inputEntry:{
