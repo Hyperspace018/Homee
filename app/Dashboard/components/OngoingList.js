@@ -61,21 +61,21 @@ class OngoingList extends Component{
           </View>
         ) : (
           this.props.homeworkReducers.homeworksOngoing.map((homework) => (
-            <TouchableOpacity onPress={() => this.handleMoveState(homework.objectId, "done")} onLongPress={() => this.handleMoveState(homework.objectId, "pending")}>
-              <Card>
-                <CardItem bordered>
+            <Card>
+              <CardItem bordered>
+                <TouchableOpacity onPress={() => this.handleMoveState(homework.objectId, "done")} onLongPress={() => this.handleMoveState(homework.objectId, "pending")}>
                   <Text style={{color: "#3498db", fontWeight: "bold"}}>{homework.title}</Text>
-                </CardItem>
-                <CardItem bordered style={{ padding: 2}}>
-                  <Body>
-                    <Text>Teacher</Text>
-                    <Text note>{homework.teacher}</Text>
-                    <Text>Deadline</Text>
-                    <Text note>{moment(homework.deadline).format('lll')}</Text>
-                  </Body>
-                </CardItem>
-              </Card>
-            </TouchableOpacity>          
+                </TouchableOpacity>
+              </CardItem>
+              <CardItem bordered style={{ padding: 2}}>
+                <Body>
+                  <Text>Teacher</Text>
+                  <Text note>{homework.teacher}</Text>
+                  <Text>Deadline</Text>
+                  <Text note>{moment(homework.deadline).format('lll')}</Text>
+                </Body>
+              </CardItem>
+            </Card>
           ))
         )
       )

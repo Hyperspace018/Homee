@@ -61,21 +61,21 @@ class DoneList extends Component{
           </View>
         ) : (
           this.props.homeworkReducers.homeworksDone.map((homework) => (
-            <TouchableOpacity onPress={() => this.handleMoveState(homework.objectId, "ongoing")} onLongPress={() => this.handleMoveState(homework.objectId, "pending")}>
-              <Card>
-                <CardItem bordered>
+            <Card>
+              <CardItem bordered>
+                <TouchableOpacity onPress={() => this.handleMoveState(homework.objectId, "ongoing")} onLongPress={() => this.handleMoveState(homework.objectId, "pending")}>
                   <Text style={{color: "#2ecc71", fontWeight: "bold"}}>{homework.title}</Text>
-                </CardItem>
-                <CardItem bordered style={{ padding: 2}}>
-                  <Body>
-                    <Text>Teacher</Text>
-                    <Text note>{homework.teacher}</Text>
-                    <Text>Deadline</Text>
-                    <Text note>{moment(homework.deadline).format('lll')}</Text>
-                  </Body>
-                </CardItem>
-              </Card>
-            </TouchableOpacity>
+                </TouchableOpacity>
+              </CardItem>
+              <CardItem bordered style={{ padding: 2}}>
+                <Body>
+                  <Text>Teacher</Text>
+                  <Text note>{homework.teacher}</Text>
+                  <Text>Deadline</Text>
+                  <Text note>{moment(homework.deadline).format('lll')}</Text>
+                </Body>
+              </CardItem>
+            </Card>
           ))
         )
       )

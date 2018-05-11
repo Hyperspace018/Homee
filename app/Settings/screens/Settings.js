@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import { 
   Container, Content, Text, Button, View,
-  Header, Body, Title
+  Header, Body, Title, Card, CardItem
 } from 'native-base';
 
 export default class ExampleScreen1 extends Component{
@@ -15,10 +15,14 @@ export default class ExampleScreen1 extends Component{
             <Title>Settings</Title>
           </Body>
         </Header>
-        <View style={styles.container}>
-          <Text style={styles.welcomeTitle}>Settings</Text>
-          <Text style={styles.welcomeSubtitle}>Settings Screen</Text>
-        </View>
+        <Card>
+          <CardItem>
+            <View style={styles.container}>
+              <Text style={styles.welcomeTitle}>Settings</Text>
+              <Text style={styles.welcomeSubtitle}>Settings Screen</Text>
+            </View>
+          </CardItem>
+        </Card>
       </Container>
     );
   }
