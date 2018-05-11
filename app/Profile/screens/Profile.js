@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, Platform } from 'react-native';
+import { StyleSheet, Image, Platform, AsyncStorage } from 'react-native';
 import { 
   Container, Content, Text, Button, View,
   Header, Body, Title, Card, CardItem
 } from 'native-base';
+import { connect } from 'react-redux';
+import { allProfiles, allOngoingHomeWork } from '../actions';
 
-export default class ExampleScreen1 extends Component{
+class Profile extends Component{
+
+  componentDidMount(){
+    AsyncStorage.multiGet(['@objectId:key'], (error, result) => {
+      if(result){
+        if(result[0][1] !== null){
+          this.props.dispatch(allProfiles(result[0][1]))
+          this.props.dispatch(allOngoingHomeWork(result[0][1]))
+        }
+      }
+    });
+  }
 
   render(){
     return(
@@ -15,9 +28,13 @@ export default class ExampleScreen1 extends Component{
             <View style={styles.profiles}>
               <Image source={{uri : 'https://reactnativecode.com/wp-content/uploads/2018/01/2_img.png'}}
                 style={styles.imageFrame} />            
-              <Text style={styles.fullName}>Muhammad Isa Wijaya Kusuma</Text>
-              <Text style={styles.emails}>hyperspace018@gmail.com</Text>
-              <Text style={styles.performance}>Good</Text>
+              <Text style={styles.fullName}>{this.props.profileReducers.profile.name}</Text>
+              <Text style={styles.emails}>{this.props.profileReducers.profile.email}</Text>
+              {this.props.profileReducers.homeworksDone.length <= this.props.profileReducers.homeworksPend.length ? (
+                <Text style={{top: 55,fontSize: 65,color: "#e74c3c"}}>Bad</Text>
+              ) : (
+                <Text style={{top: 55,fontSize: 65,color: "#2ecc71"}}>Good</Text>
+              )}              
               <Text style={styles.summary}>Summary</Text>
             </View>
             <View style={styles.statisticsLabel}>
@@ -27,13 +44,13 @@ export default class ExampleScreen1 extends Component{
             </View>
             <View style={styles.statisticsButton}>
               <Button rounded style={styles.ongoingButton}>
-                <Text style={{textAlign:"center"}}>70</Text>
+                <Text style={{textAlign:"center"}}>{this.props.profileReducers.homeworksOngoing.length}</Text>
               </Button>
               <Button rounded style={styles.doneButton}>
-                <Text style={{textAlign:"center"}}>10</Text>
+                <Text style={{textAlign:"center"}}>{this.props.profileReducers.homeworksDone.length}</Text>
               </Button>
               <Button rounded style={styles.pendingButton}>
-                <Text style={{textAlign:"center"}}>20</Text>
+                <Text style={{textAlign:"center"}}>{this.props.profileReducers.homeworksPend.length}</Text>
               </Button>
             </View>
           </Card>
@@ -71,11 +88,6 @@ const styles = StyleSheet.create({
     right: 0, 
     justifyContent: 'space-evenly' 
   },
-  performance:{
-    top: 55,
-    fontSize: 65,
-    color: "#2ecc71"
-  },
   summary:{
     top: 50,
     color: '#95a5a6'
@@ -111,3 +123,9 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+const mapStateToProps = (state) => ({
+  profileReducers: state.profileReducers
+})
+
+export default connect(mapStateToProps)(Profile)
