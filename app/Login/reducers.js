@@ -11,7 +11,7 @@ const loginReducers = ( state=intialState, action ) => {
     case "POST_LOGIN_FULFILLED":
       return { ...state, isLoading: false, isLoginSucess: true}
     case "POST_LOGIN_REJECTED":
-      return { ...state, isLoading: false, isLoginSucess: true, isError: true}
+      return { ...state, isLoading: false, isLoginSucess: false, isError: true}
     default:
       return state
   }

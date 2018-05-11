@@ -63,7 +63,7 @@ class PendingList extends Component{
           this.props.homeworkReducers.homeworksPend.map((homework) => (
             <Card>
               <CardItem bordered>
-                <TouchableOpacity onPress={() => this.handleMoveState(homework.objectId, "ongoing")} onLongPress={() => this.handleMoveState(homework.objectId, "pending")}>
+                <TouchableOpacity onPress={() => this.handleMoveState(homework.objectId, "ongoing")} onLongPress={() => this.handleMoveState(homework.objectId, "done")}>
                   <Text style={{color: "#f1c40f", fontWeight: "bold"}}>{homework.title}</Text>
                 </TouchableOpacity>
               </CardItem>
