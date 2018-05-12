@@ -1,4 +1,4 @@
 # Homee
 Home work manager for student
-![](http://i63.tinypic.com/2d2eudu.png)
-![](http://i63.tinypic.com/2v34v8y.png)
+### Manage your home work with fingers
+![](http://i67.tinypic.com/2qbglsl.png)
